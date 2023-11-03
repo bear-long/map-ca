@@ -1,1 +1,73 @@
+#include<iostream>
+#include<map>
+#include<algorithm>
+#include<string>
+using namespace std;
+class student
+{
+    private:
+    string name,ssh;
+    double math,chinese,zhuanyeke;
+    double kg,tall;
+    public:
+    student(string name,string ssh,double math,double chinese,double zhuanyeke,double kg,double tall);
+    string getssh(){return ssh;}
+    void print()
+    {
+        cout<<"name:"<<name<<endl<<"math="<<math<<endl<<"chinese="<<chinese<<endl<<"zhuanyeke="<<zhuanyeke<<endl<<"kg:"<<kg<<endl<<"tall:"<<tall<<endl;
+    }
+};
+void findElement(map<int, student> m, int key);
+int main()
+{
+    student stu1("hxl","hhh",111,100,100,67,172);
+    student stu2("dd","dd",115,100,99,67,172);
+    student stu3("yy","yy",123,100,98,67,172);
+    student stu4("ss","ss",122,102,100,67,172);
+    int flag=1;
+    int times=5;
+    string key,id;
+    map<string,student> st;
+    st.insert(make_pair("123456",stu1));
+    st.insert(make_pair("12345",stu2));
+    st.insert(make_pair("1234",stu3));
+    st.insert(make_pair("123",stu4));
+    cout<<"欢迎使用ll的系统，输入校园卡号、密码。开始使用！"<<endl;
+    cout<<"请输入校园卡号：";cin>>id;
+    cout<<"请输入密码：";cin>>key;
+    map<string,student>::iterator it1=st.find(id);
+    while (flag==1)
+    {   
+           if (it1!=st.end() && it1->second.getssh()==key)
+            /*如果在没有getssh()的情况下。我使用student& s=st.find(id)的时候，当我使用s.getssh()的时候会出错误
+            if (it1!=st.end() && it1->second.getssh()==key)*/
+            {
+                cout<<"输入正确，你想要的信息如下"<<endl;
+                it1->second.print(); 
+                flag=0;           
+            }
+            else
+            {
+                times--;
+                cout<<"密码错误！你还有"<<times<<"次机会！"<<endl;
+                cout<<"请重新输入校园卡号：";cin>>id;
+                cout<<"请重新输入密码：";cin>>key; 
+                it1=st.find(id);
+                if(times<=0)
+                flag=0;
+            }
+        }
+    return 0;
+}
+
+student::student(string name,string ssh,double math,double chinese,double zhuanyeke,double kg,double tall)
+{
+    this->ssh=ssh;
+    this->name=name;
+    this->math=math;
+    this->zhuanyeke=zhuanyeke;
+    this->kg=kg;
+    this->tall=tall;
+    this->chinese=chinese;
+}
 
